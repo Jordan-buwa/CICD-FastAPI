@@ -1,8 +1,8 @@
 from unittest.mock import MagicMock
-import sys
-from pathlib import Path
+#import sys
+#from pathlib import Path
 # Add the project root to sys.path
-sys.path.append(str(Path(__file__).parent.parent))
+#sys.path.append(str(Path(__file__).parent.parent))
 import pytest
 from fastapi.testclient import TestClient
 
