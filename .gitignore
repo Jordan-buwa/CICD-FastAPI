@@ -3,7 +3,6 @@ app/__pycache__/
 .pytest_cache/
 test_endpoint.py
 tests/__pycache__/
-tests/main.py
 tests/__pycache__/
 tests/main.py
 cicd/
