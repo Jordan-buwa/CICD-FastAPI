@@ -6,3 +6,4 @@ tests/__pycache__/
 tests/__pycache__/
 tests/main.py
 cicd/
+__pycache__/
