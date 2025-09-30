@@ -31,4 +31,3 @@ jobs:
           API_KEY: ${{secrets.API_KEY}}
         run: |
           pytest
-        working-directory: ./CICD-FastAPI
