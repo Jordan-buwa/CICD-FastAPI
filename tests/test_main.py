@@ -57,7 +57,7 @@ def test_predict_invalid_model():
         assert response.status_code == 422
 
 
-"""@pytest.fixture
+@pytest.fixture
 def mock_models(mocker):
     mock_dict = {"logistic_model": MagicMock, "rf_model": MagicMock}
     m = mocker.patch(
@@ -65,21 +65,6 @@ def mock_models(mocker):
         return_value=mock_dict,
     )
     m.keys.return_value = mock_dict.keys()
-    return m"""
-
-@pytest.fixture
-def mock_models(mocker):
-    # Mock joblib.load to return a model with a predict method
-    mock_model = MagicMock()
-    mock_model.predict.return_value = [0]  # Valid prediction for iris dataset
-    mocker.patch("joblib.load", return_value=mock_model)
-    
-    # Mock ml_models to return valid file paths
-    mock_dict = {
-        "logistic_model": "models/logistic_model.pkl",
-        "rf_model": "models/rf_model.pkl"
-    }
-    m = mocker.patch("app.main.ml_models", mock_dict)
     return m
 
 
