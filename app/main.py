@@ -39,8 +39,8 @@ def load_model(path):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Load the ML model
-    logistic_path = os.getenv("LOGISTIC_MODEL")
-    rf_path = os.getenv("RF_MODEL")
+    logistic_path = os.getenv("LOGISTIC_MODEL", "models/logistic_model.pkl")
+    rf_path = os.getenv("RF_MODEL", "models/rf_model.pkl")
 
     if not logistic_path or not rf_path:
         logger.error(f"Missing environment variables: LOGISTIC_MODEL={logistic_path}, RF_MODEL={rf_path}")
