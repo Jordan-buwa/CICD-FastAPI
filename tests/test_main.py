@@ -6,16 +6,6 @@ from dotenv import load_dotenv
 from app.main import app
 load_dotenv()
 
-ml_models = {}
-
-def load_model(path: str):
-    if not path:
-        return None
-    model = None
-    with open(path, "rb") as f:
-        model = pickle.load(f)
-    return model
-
 def test_root():
     with TestClient(app) as client:
         response = client.get("/")
