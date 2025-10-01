@@ -34,8 +34,8 @@ def load_model(path: str):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Load the ML model
-    ml_models["logistic_model"] = load_model(os.getenv("LOGISTIC_MODEL"))
-    ml_models["rf_model"] = load_model(os.getenv("RF_MODEL"))
+    ml_models["logistic_model"] = load_model(os.getenv("LOGISTIC_MODEL"), "models/logistic_regression.pkl")
+    ml_models["rf_model"] = load_model(os.getenv("RF_MODEL", "models/random_forest.pkl"))
 
     yield
     # Clean up the ML models and release the resources
