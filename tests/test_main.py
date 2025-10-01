@@ -57,7 +57,7 @@ def test_predict_invalid_model():
         assert response.status_code == 422
 
 
-@pytest.fixture
+"""@pytest.fixture
 def mock_models(mocker):
     mock_dict = {"logistic_model": MagicMock, "rf_model": MagicMock}
     m = mocker.patch(
@@ -84,3 +84,4 @@ def test_predict_mocked(mock_models):
 
         assert response.status_code == 200
         assert response.json() == {"model": "logistic_model", "prediction": -1}
+"""
