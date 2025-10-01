@@ -29,8 +29,8 @@ jobs:
           RF_MODEL: ${{ secrets.RF_MODEL }}
           LOGISTIC_MODEL: ${{ secrets.LOGISTIC_MODEL }}
         run: |
-          echo "RF_MODEL path: $RF_MODEL"
-          echo "LOGISTIC_MODEL path: $LOGISTIC_MODEL"
+          python3 -c "from sklearn.ensemble import RandomForestClassifier; import joblib; model = RandomForestClassifier(); joblib.dump(model, 'models/random_forest.pkl')" && echo "RF_MODEL path: $RF_MODEL"
+          python3 -c "from sklearn.linear_model import LogisticRegression; import joblib; model = LogisticRegression(); joblib.dump(model, 'models/logistic_model.pkl')" && echo "LOGISTIC_MODEL path: $LOGISTIC_MODEL"
           ls -la models/  # Check if model files exist
 
       - name: Run tests
