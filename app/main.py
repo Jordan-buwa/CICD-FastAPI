@@ -90,8 +90,3 @@ async def predict(
         return {"prediction": prediction[0]}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
-    model = joblib.load(model_path)
-    prediction = model.predict(input_data)
-    
-
-    return {"model": model_name, "prediction": int(prediction[0])}
