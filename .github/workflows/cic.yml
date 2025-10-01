@@ -24,10 +24,19 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-mock
 
+      - name: Debug environment variables (optional, for troubleshooting)
+        env:
+          RF_MODEL: ${{ secrets.RF_MODEL }}
+          LOGISTIC_MODEL: ${{ secrets.LOGISTIC_MODEL }}
+        run: |
+          echo "RF_MODEL path: $RF_MODEL"
+          echo "LOGISTIC_MODEL path: $LOGISTIC_MODEL"
+          ls -la models/  # Check if model files exist
+
       - name: Run tests
         env:
-          RF_MODEL: ${{secrets.RF_MODEL}}
-          LOGISTIC_MODEL: ${{secrets.LOGISTIC_MODEL}}
-          API_KEY: ${{secrets.API_KEY}}
+          RF_MODEL: ${{ secrets.RF_MODEL }}
+          LOGISTIC_MODEL: ${{ secrets.LOGISTIC_MODEL }}
+          API_KEY: ${{ secrets.API_KEY }}
         run: |
           pytest
