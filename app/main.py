@@ -2,7 +2,7 @@ import os
 import pickle
 from contextlib import asynccontextmanager
 from typing import Annotated
-
+import joblib
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel, Field
@@ -80,6 +80,7 @@ async def predict(
         raise HTTPException(status_code=404, detail="Model not found.")
 
     model = ml_models[model_name]
+    model = joblib.load(model)
     prediction = model.predict(input_data)
 
     return {"model": model_name, "prediction": int(prediction[0])}
