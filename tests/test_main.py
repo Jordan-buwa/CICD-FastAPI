@@ -1,10 +1,10 @@
 from unittest.mock import MagicMock
-import pickle
+
 import pytest
 from fastapi.testclient import TestClient
-from dotenv import load_dotenv
+
 from app.main import app
-load_dotenv()
+
 
 def test_root():
     with TestClient(app) as client:
@@ -83,5 +83,4 @@ def test_predict_mocked(mock_models):
         )
 
         assert response.status_code == 200
-        assert response.json() == {"model": "logistic_model", "prediction": -1}
-"""
+        assert response.json() == {"model": "logistic_model", "prediction": -1}"""
