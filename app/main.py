@@ -24,7 +24,6 @@ class IrisData(BaseModel):
 def load_model(path: str):
     if not path:
         return None
-
     model = None
     with open(path, "rb") as f:
         model = pickle.load(f)
@@ -34,7 +33,7 @@ def load_model(path: str):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Load the ML model
-    ml_models["logistic_model"] = load_model(os.getenv("LOGISTIC_MODEL"), "models/logistic_regression.pkl")
+    ml_models["logistic_model"] = load_model(os.getenv("LOGISTIC_MODEL", "models/logistic_regression.pkl"))
     ml_models["rf_model"] = load_model(os.getenv("RF_MODEL", "models/random_forest.pkl"))
 
     yield

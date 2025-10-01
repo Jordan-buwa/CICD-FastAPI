@@ -27,21 +27,6 @@ def test_list_models():
         assert response.json() == {"available_models": ["logistic_model", "rf_model"]}
 
 
-def test_predict_valid_model():
-    with TestClient(app) as client:
-        response = client.post(
-            "/predict/rf_model",
-            json={
-                "sepal_length": 5.1,
-                "sepal_width": 3.5,
-                "petal_length": 1.4,
-                "petal_width": 0.2,
-            },
-        )
-        assert response.status_code == 200
-        assert response.json() == {"model": "rf_model", "prediction": 0}
-
-
 def test_predict_invalid_model():
     with TestClient(app) as client:
         response = client.post(
@@ -57,7 +42,7 @@ def test_predict_invalid_model():
         assert response.status_code == 422
 
 
-"""@pytest.fixture
+@pytest.fixture
 def mock_models(mocker):
     mock_dict = {"logistic_model": MagicMock, "rf_model": MagicMock}
     m = mocker.patch(
@@ -83,4 +68,4 @@ def test_predict_mocked(mock_models):
         )
 
         assert response.status_code == 200
-        assert response.json() == {"model": "logistic_model", "prediction": -1}"""
+        assert response.json() == {"model": "logistic_model", "prediction": -1}
