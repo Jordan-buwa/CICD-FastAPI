@@ -80,6 +80,8 @@ async def predict(
         raise HTTPException(status_code=404, detail="Model not found.")
 
     model_path = ml_models[model_name]
+    if not os.path.exists(model_path):
+        raise HTTPException(status_code=404, detail=f"Model {model_name} not found")
     model = joblib.load(model_path)
     prediction = model.predict(input_data)
     
