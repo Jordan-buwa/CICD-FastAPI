@@ -30,5 +30,4 @@ jobs:
           LOGISTIC_MODEL: ${{secrets.LOGISTIC_MODEL}}
           API_KEY: ${{secrets.API_KEY}}
         run: |
-          PYTHONPATH=$PYTHONPATH:/home/runner/work/CICD-FastAPI pytest -v
-        working-directory: /home/runner/work/CICD-FastAPI/
+          pytest
