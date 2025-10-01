@@ -2,11 +2,10 @@ import os
 import pickle
 from contextlib import asynccontextmanager
 from typing import Annotated
-import joblib
+
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel, Field
-import numpy as np
 
 load_dotenv()
 
@@ -35,8 +34,8 @@ def load_model(path: str):
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Load the ML model
-    ml_models["logistic_model"] = load_model(os.getenv("LOGISTIC_MODEL", "models/logistic_regression.pkl"))
-    ml_models["rf_model"] = load_model(os.getenv("RF_MODEL", "models/random_forest.pkl"))
+    ml_models["logistic_model"] = load_model(os.getenv("LOGISTIC_MODEL"))
+    ml_models["rf_model"] = load_model(os.getenv("RF_MODEL"))
 
     yield
     # Clean up the ML models and release the resources
@@ -80,7 +79,7 @@ async def predict(
     if model_name not in ml_models.keys():
         raise HTTPException(status_code=404, detail="Model not found.")
 
-    model_path = ml_models[model_name]
-    model = joblib.load(model_path)
-    prediction = model.predict(input_data).tolist()
-    return {"prediction": prediction[0]}
+    model = ml_models[model_name]
+    prediction = model.predict(input_data)
+
+    return {"model": model_name, "prediction": int(prediction[0])}
