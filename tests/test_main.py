@@ -2,9 +2,9 @@ from unittest.mock import MagicMock
 
 import pytest
 from fastapi.testclient import TestClient
-
+from dotenv import load_dotenv
 from app.main import app
-
+load_dotenv()
 
 def test_root():
     with TestClient(app) as client:
