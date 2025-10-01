@@ -6,6 +6,7 @@ import joblib
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Path
 from pydantic import BaseModel, Field
+import numpy as np
 
 load_dotenv()
 
@@ -82,6 +83,13 @@ async def predict(
     model_path = ml_models[model_name]
     if not os.path.exists(model_path):
         raise HTTPException(status_code=404, detail=f"Model {model_name} not found")
+    try:
+        model = joblib.load(model_path)
+        features = np.array([[iris_data.sepal_length, iris_data.sepal_width, iris_data.petal_length, iris_data.petal_width]])
+        prediction = model.predict(features).tolist()
+        return {"prediction": prediction[0]}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
     model = joblib.load(model_path)
     prediction = model.predict(input_data)
     
