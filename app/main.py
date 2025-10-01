@@ -79,8 +79,12 @@ async def predict(
     if model_name not in ml_models.keys():
         raise HTTPException(status_code=404, detail="Model not found.")
 
-    model = ml_models[model_name]
-    model = joblib.load(model)
-    prediction = model.predict(input_data)
+    model_path = ml_models[model_name]
+    try:
+        model = joblib.load(model_path)
+        prediction = model.predict(input_data)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error loading model: {e}")
+    
 
     return {"model": model_name, "prediction": int(prediction[0])}
