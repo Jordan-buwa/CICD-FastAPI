@@ -7,3 +7,5 @@ tests/__pycache__/
 tests/main.py
 cicd/
 __pycache__/
+models/__pycache__/
+models/train_models.py
