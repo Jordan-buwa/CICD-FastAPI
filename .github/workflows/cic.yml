@@ -1,0 +1,39 @@
+name: CI/CD Test Pipeline Jo
+
+on:
+  push:
+      branches:
+          - main
+  pull_request:
+      branches:
+          - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4  # Update to v4 for latest version
+      - name: Set up Python
+        uses: actions/setup-python@v5  # Update to v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-mock
+
+      - name: Debug environment variables (optional, for troubleshooting)
+        run: |
+          python3 -c "from sklearn.ensemble import RandomForestClassifier; import joblib; model = RandomForestClassifier(); joblib.dump(model, 'models/random_forest.pkl')" && echo "RF_MODEL path: $RF_MODEL"
+          python3 -c "from sklearn.linear_model import LogisticRegression; import joblib; model = LogisticRegression(); joblib.dump(model, 'models/logistic_regression.pkl')" && echo "LOGISTIC_MODEL path: $LOGISTIC_MODEL"
+          ls -la models/  # Check if model files exist
+
+      - name: Run tests
+        env:
+          RF_MODEL: ${{ secrets.RF_MODEL }}
+          LOGISTIC_MODEL: ${{ secrets.LOGISTIC_MODEL }}
+          API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          pytest
